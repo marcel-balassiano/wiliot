@@ -7,6 +7,14 @@ terraform_show.txt - resources created
 
 - app python created by me
 
+
+helm to create a chart for airflow :
+
+➜  k8s git:(master) helm list -n marcel
+NAME      NAMESPACE       REVISION        UPDATED                                 STATUS  CHART           APP VERSION
+airflow marcel          1               2025-02-20 12:16:50.922279 +0200 IST    failed  airflow-1.15.0  2.9.3
+
+
 -rds 
 ~ /opt/homebrew/opt/postgresql@15/bin/psql -hpostgresql-instance.cjhcxu64g69o.us-east-2.rds.amazonaws.com -Upgmaster -dpostgres
 
