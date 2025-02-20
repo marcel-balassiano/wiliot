@@ -1,0 +1,9 @@
+resource "aws_eks_node_group" "node_group" {
+  cluster_name    = aws_eks_cluster.eks_cluster.name
+  node_group_name = "node-group-public-us-east-2-marcel-01"
+  node_role_arn   = aws_iam_role.eks_role.arn
+  subnet_ids      = [
+    aws_subnet.subnet_public_us_east_2a_marcel_01.id,
+    aws_subnet.subnet_public_us_east_2b_marcel_01.id
+  ]  
+}

@@ -1,0 +1,16 @@
+# values-no-persistence.yaml
+postgresql:
+  enabled: true
+  persistence:
+    enabled: false
+  emptyDir: {}
+
+redis:
+  enabled: true
+  persistence:
+    enabled: false
+  emptyDir: {}
+
+logs:
+  persistence:
+    enabled: false

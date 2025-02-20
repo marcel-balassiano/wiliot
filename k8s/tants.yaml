@@ -1,0 +1,37 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: eks-cluster-us-east-2-marcel-01
+  region: us-east-2
+
+addons:
+- name: aws-ebs-csi-driver
+  version: latest
+  configurationValues: |
+    {
+      "controller": {
+        "tolerations": [
+          {
+            "key": "node-role.kubernetes.io/master",
+            "operator": "Exists",
+            "effect": "NoSchedule"
+          },
+          {
+            "key": "node-role.kubernetes.io/control-plane",
+            "operator": "Exists",
+            "effect": "NoSchedule"
+          },
+          {
+            "key": "CriticalAddonsOnly",
+            "operator": "Exists"
+          }
+        ]
+      },
+      "node": {
+        "tolerations": [
+          {
+            "operator": "Exists"
+          }
+        ]
+      }
+    }

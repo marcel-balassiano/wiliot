@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  DB_HOST: "postgresql-instance.cjhcxu64g69o.us-east-2.rds.amazonaws.com"  # Replace with RDS endpoint
+  DB_NAME: "wiliot_db"
+  DB_USER: "pgmaster"
+  DB_PORT: "5432"

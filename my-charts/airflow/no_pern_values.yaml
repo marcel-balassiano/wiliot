@@ -1,0 +1,45 @@
+images:
+  airflow:
+    repository: 092988563851.dkr.ecr.us-east-2.amazonaws.com/ecr-repository-us-east-2-marcel-01
+    tag: airflow-marcel-v1
+    pullPolicy: IfNotPresent
+
+postgresql:
+  enabled: true
+  persistence:
+    enabled: false
+  primary:
+    persistence:
+      enabled: false
+
+redis:
+  enabled: true
+  persistence:
+    enabled: false
+
+scheduler:
+  # Remove persistence property from scheduler
+  resources:
+    limits:
+      cpu: "2"
+      memory: "2Gi"
+    requests:
+      cpu: "1"
+      memory: "1Gi"
+
+
+
+webserver:
+  defaultUser:
+    enabled: true
+
+# Global persistence for logs
+dags:
+  persistence:
+    enabled: false
+  gitSync:
+    enabled: false
+
+logs:
+  persistence:
+    enabled: false

@@ -1,0 +1,768 @@
+# data.aws_iam_policy_document.eks_assume_role_policy:
+data "aws_iam_policy_document" "eks_assume_role_policy" {
+    id            = "2851119427"
+    json          = jsonencode(
+        {
+            Statement = [
+                {
+                    Action    = "sts:AssumeRole"
+                    Effect    = "Allow"
+                    Principal = {
+                        Service = "ec2.amazonaws.com"
+                    }
+                },
+            ]
+            Version   = "2012-10-17"
+        }
+    )
+    minified_json = jsonencode(
+        {
+            Statement = [
+                {
+                    Action    = "sts:AssumeRole"
+                    Effect    = "Allow"
+                    Principal = {
+                        Service = "ec2.amazonaws.com"
+                    }
+                },
+            ]
+            Version   = "2012-10-17"
+        }
+    )
+    version       = "2012-10-17"
+
+    statement {
+        actions       = [
+            "sts:AssumeRole",
+        ]
+        effect        = "Allow"
+        not_actions   = []
+        not_resources = []
+        resources     = []
+
+        principals {
+            identifiers = [
+                "ec2.amazonaws.com",
+            ]
+            type        = "Service"
+        }
+    }
+}
+
+# aws_db_instance.postgresql_marcel:
+resource "aws_db_instance" "postgresql_marcel" {
+    address                               = "postgresql-instance.cjhcxu64g69o.us-east-2.rds.amazonaws.com"
+    allocated_storage                     = 20
+    apply_immediately                     = false
+    arn                                   = "arn:aws:rds:us-east-2:092988563851:db:postgresql-instance"
+    auto_minor_version_upgrade            = true
+    availability_zone                     = "us-east-2b"
+    backup_retention_period               = 0
+    backup_target                         = "region"
+    backup_window                         = "05:39-06:09"
+    ca_cert_identifier                    = "rds-ca-rsa2048-g1"
+    copy_tags_to_snapshot                 = false
+    customer_owned_ip_enabled             = false
+    db_name                               = "wiliot_db"
+    db_subnet_group_name                  = "rds-subnet-group"
+    dedicated_log_volume                  = false
+    delete_automated_backups              = true
+    deletion_protection                   = false
+    domain_dns_ips                        = []
+    enabled_cloudwatch_logs_exports       = []
+    endpoint                              = "postgresql-instance.cjhcxu64g69o.us-east-2.rds.amazonaws.com:5432"
+    engine                                = "postgres"
+    engine_lifecycle_support              = "open-source-rds-extended-support"
+    engine_version                        = "16"
+    engine_version_actual                 = "16.3"
+    hosted_zone_id                        = "Z2XHWR1WZ565X2"
+    iam_database_authentication_enabled   = false
+    id                                    = "db-M7BHSD5KJTA6RZ6ZWNV3SP4VNY"
+    identifier                            = "postgresql-instance"
+    instance_class                        = "db.t3.micro"
+    iops                                  = 0
+    kms_key_id                            = "arn:aws:kms:us-east-2:092988563851:key/352f64db-d2ae-4519-b2cb-140bc92c3fb6"
+    license_model                         = "postgresql-license"
+    listener_endpoint                     = []
+    maintenance_window                    = "tue:10:16-tue:10:46"
+    master_user_secret                    = []
+    max_allocated_storage                 = 0
+    monitoring_interval                   = 0
+    multi_az                              = true
+    network_type                          = "IPV4"
+    option_group_name                     = "default:postgres-16"
+    parameter_group_name                  = "default.postgres16"
+    password                              = (sensitive value)
+    performance_insights_enabled          = false
+    performance_insights_retention_period = 0
+    port                                  = 5432
+    publicly_accessible                   = true
+    replicas                              = []
+    resource_id                           = "db-M7BHSD5KJTA6RZ6ZWNV3SP4VNY"
+    skip_final_snapshot                   = true
+    status                                = "available"
+    storage_encrypted                     = true
+    storage_throughput                    = 0
+    storage_type                          = "gp2"
+    tags                                  = {
+        "Environment" = "Production"
+    }
+    tags_all                              = {
+        "Environment" = "Production"
+    }
+    username                              = "pgmaster"
+    vpc_security_group_ids                = [
+        "sg-087e04db2fe83946b",
+    ]
+}
+
+# aws_db_subnet_group.rds_subnet_group:
+resource "aws_db_subnet_group" "rds_subnet_group" {
+    arn                     = "arn:aws:rds:us-east-2:092988563851:subgrp:rds-subnet-group"
+    description             = "Managed by Terraform"
+    id                      = "rds-subnet-group"
+    name                    = "rds-subnet-group"
+    subnet_ids              = [
+        "subnet-0b858301b1f33a0ed",
+        "subnet-0c25dc58c19ff194a",
+    ]
+    supported_network_types = [
+        "IPV4",
+    ]
+    tags                    = {
+        "Name" = "RDS Subnet Group"
+    }
+    tags_all                = {
+        "Name" = "RDS Subnet Group"
+    }
+    vpc_id                  = "vpc-0e4ebd0a46c84a45d"
+}
+
+# aws_ecr_repository.ecr_repository_us_east_2_marcel_01:
+resource "aws_ecr_repository" "ecr_repository_us_east_2_marcel_01" {
+    arn                  = "arn:aws:ecr:us-east-2:092988563851:repository/ecr-repository-us-east-2-marcel-01"
+    id                   = "ecr-repository-us-east-2-marcel-01"
+    image_tag_mutability = "MUTABLE"
+    name                 = "ecr-repository-us-east-2-marcel-01"
+    registry_id          = "092988563851"
+    repository_url       = "092988563851.dkr.ecr.us-east-2.amazonaws.com/ecr-repository-us-east-2-marcel-01"
+    tags                 = {}
+    tags_all             = {}
+
+    encryption_configuration {
+        encryption_type = "AES256"
+    }
+
+    image_scanning_configuration {
+        scan_on_push = false
+    }
+}
+
+# aws_eks_cluster.eks_cluster:
+resource "aws_eks_cluster" "eks_cluster" {
+    arn                           = "arn:aws:eks:us-east-2:092988563851:cluster/eks-cluster-us-east-2-marcel-01"
+    bootstrap_self_managed_addons = true
+    certificate_authority         = [
+        {
+            data = "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURCVENDQWUyZ0F3SUJBZ0lJT1NRNWZ3UDNVbjB3RFFZSktvWklodmNOQVFFTEJRQXdGVEVUTUJFR0ExVUUKQXhNS2EzVmlaWEp1WlhSbGN6QWVGdzB5TlRBeU1UZ3hNalF4TURaYUZ3MHpOVEF5TVRZeE1qUTJNRFphTUJVeApFekFSQmdOVkJBTVRDbXQxWW1WeWJtVjBaWE13Z2dFaU1BMEdDU3FHU0liM0RRRUJBUVVBQTRJQkR3QXdnZ0VLCkFvSUJBUUN3ODg0bDYzbXFndHFJSFVyeWJ6dVhBVnNSbnhJZk9Ucmswcit0N0lkN1FacXN2SE5pQmdiK0ovSjQKb0xGVmRSZmRmWnlEOFNjRndraUhuMGErVHJRZ0Zxa24rV3VrK2dQUENuS1E5dVF5YU4xNUZEM05PY3QwQ0MxdgpWK1FoOWFVNjNOLzY2UzdOSE5IUUY0S0R3aXI4dWdMRmpnSWdkQlpueDJXWUdXZ3MvUFR4MHIydWNDazZKbTlIClBob0NpZy90NVZmQnZKNmorZWZWUldIZkp3S2hPMkk0OFNLTHpJRTFOMzRHYWJnQjZvbjd5UmROYThXdXI5VEEKN0RjODBuYUg5UGhOamEzUVFqM3NaYklvNE9tRFluTjRMSmpGeDlsOWpQNERUOFFvaHNib2xmcnoyVnFMU2F2TgpEU1hFd1RETk9TbnRxQWNoVVNhRzVTZzFFS0RwQWdNQkFBR2pXVEJYTUE0R0ExVWREd0VCL3dRRUF3SUNwREFQCkJnTlZIUk1CQWY4RUJUQURBUUgvTUIwR0ExVWREZ1FXQkJSbENPUWVIVGJuTWUwVU85Qk93TzBSZ081VUJ6QVYKQmdOVkhSRUVEakFNZ2dwcmRXSmxjbTVsZEdWek1BMEdDU3FHU0liM0RRRUJDd1VBQTRJQkFRQWxjYndMbWl5Ywp5aGpPaHhhZ095WlRkZmcwQm1jRm5MWkttamNNS2N0V1RpOU1JVWF2SVJpN3dGQVE1TDhJa0pXclQ0SjBCQWM5CjRRVmxkQVpPSXdkL0VkVStxZjJ6Unk5WUE0NUgrdHBLMXZsRVJmTk1vVzV0bTRibGdlVXN6RzFXdmUyYldxSm0KRXk4endpZ2s0MnFhNmlsbGxac1dQQzhZZ0k5NEdUb3ZIOTBaeDFoRDl0OHcvMGFOOW9PdlhhNWtYUWo2c0lCZgpnZDNtUVdBdGU4Qys1aVJZWS9Dcjk5VHFYUng0S0NoZ1lVWng1SGV0RWNuMyt2V2VCTVo1b1VJd2pNbGpDbi8wCmhITE5ib0dyc2h0ak1mZjdJSmVqV2Z3N0NJR0Y1b1VkaXdna2w3VC81bHArREJMblo3cDg0R3hPS3hXTUxYdncKU2o2TEtFaWFFVnBQCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K"
+        },
+    ]
+    created_at                    = "2025-02-18T12:41:36Z"
+    enabled_cluster_log_types     = []
+    endpoint                      = "https://27441D78419DD0BE595A0B50A9137EFE.gr7.us-east-2.eks.amazonaws.com"
+    id                            = "eks-cluster-us-east-2-marcel-01"
+    identity                      = [
+        {
+            oidc = [
+                {
+                    issuer = "https://oidc.eks.us-east-2.amazonaws.com/id/27441D78419DD0BE595A0B50A9137EFE"
+                },
+            ]
+        },
+    ]
+    name                          = "eks-cluster-us-east-2-marcel-01"
+    platform_version              = "eks.19"
+    role_arn                      = "arn:aws:iam::092988563851:role/eks-public-us-east-2-marcel-01"
+    status                        = "ACTIVE"
+    tags                          = {}
+    tags_all                      = {}
+    version                       = "1.31"
+
+    access_config {
+        authentication_mode                         = "CONFIG_MAP"
+        bootstrap_cluster_creator_admin_permissions = true
+    }
+
+    kubernetes_network_config {
+        ip_family         = "ipv4"
+        service_ipv4_cidr = "172.20.0.0/16"
+
+        elastic_load_balancing {
+            enabled = false
+        }
+    }
+
+    upgrade_policy {
+        support_type = "EXTENDED"
+    }
+
+    vpc_config {
+        cluster_security_group_id = "sg-0f7e0b59437cad2a5"
+        endpoint_private_access   = false
+        endpoint_public_access    = true
+        public_access_cidrs       = [
+            "0.0.0.0/0",
+        ]
+        security_group_ids        = []
+        subnet_ids                = [
+            "subnet-0b858301b1f33a0ed",
+            "subnet-0c25dc58c19ff194a",
+        ]
+        vpc_id                    = "vpc-0e4ebd0a46c84a45d"
+    }
+}
+
+# aws_eks_node_group.example:
+resource "aws_eks_node_group" "example" {
+    ami_type        = "AL2023_x86_64_STANDARD"
+    arn             = "arn:aws:eks:us-east-2:092988563851:nodegroup/eks-cluster-us-east-2-marcel-01/ng-eks-cluster-us-east-2-marcel-01/5eca8ea9-e529-c77e-2917-630fcfaac9e3"
+    capacity_type   = "ON_DEMAND"
+    cluster_name    = "eks-cluster-us-east-2-marcel-01"
+    disk_size       = 20
+    id              = "eks-cluster-us-east-2-marcel-01:ng-eks-cluster-us-east-2-marcel-01"
+    instance_types  = [
+        "t3.small",
+    ]
+    node_group_name = "ng-eks-cluster-us-east-2-marcel-01"
+    node_role_arn   = "arn:aws:iam::092988563851:role/eks-node-role"
+    release_version = "1.31.5-20250212"
+    resources       = [
+        {
+            autoscaling_groups              = [
+                {
+                    name = "eks-ng-eks-cluster-us-east-2-marcel-01-5eca8ea9-e529-c77e-2917-630fcfaac9e3"
+                },
+            ]
+            remote_access_security_group_id = ""
+        },
+    ]
+    status          = "ACTIVE"
+    subnet_ids      = [
+        "subnet-0b858301b1f33a0ed",
+        "subnet-0c25dc58c19ff194a",
+    ]
+    tags_all        = {}
+    version         = "1.31"
+
+    scaling_config {
+        desired_size = 2
+        max_size     = 4
+        min_size     = 1
+    }
+
+    update_config {
+        max_unavailable            = 1
+        max_unavailable_percentage = 0
+    }
+}
+
+# aws_iam_instance_profile.eks_worker_instance_profile:
+resource "aws_iam_instance_profile" "eks_worker_instance_profile" {
+    arn         = "arn:aws:iam::092988563851:instance-profile/eks-worker-public-us-east-2-marcel-01"
+    create_date = "2025-02-18T13:59:26Z"
+    id          = "eks-worker-public-us-east-2-marcel-01"
+    name        = "eks-worker-public-us-east-2-marcel-01"
+    path        = "/"
+    role        = "eks-public-us-east-2-marcel-01"
+    tags        = {}
+    tags_all    = {}
+    unique_id   = "AIPARLJUM4GF6FTYUCXF4"
+}
+
+# aws_iam_role.eks_node_role:
+resource "aws_iam_role" "eks_node_role" {
+    arn                   = "arn:aws:iam::092988563851:role/eks-node-role"
+    assume_role_policy    = jsonencode(
+        {
+            Statement = [
+                {
+                    Action    = "sts:AssumeRole"
+                    Effect    = "Allow"
+                    Principal = {
+                        Service = "ec2.amazonaws.com"
+                    }
+                },
+            ]
+            Version   = "2012-10-17"
+        }
+    )
+    create_date           = "2025-02-19T08:22:24Z"
+    force_detach_policies = false
+    id                    = "eks-node-role"
+    managed_policy_arns   = [
+        "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly",
+        "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+        "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy",
+    ]
+    max_session_duration  = 3600
+    name                  = "eks-node-role"
+    path                  = "/"
+    tags                  = {}
+    tags_all              = {}
+    unique_id             = "AROARLJUM4GFRPALYAGHW"
+}
+
+# aws_iam_role.eks_role:
+resource "aws_iam_role" "eks_role" {
+    arn                   = "arn:aws:iam::092988563851:role/eks-public-us-east-2-marcel-01"
+    assume_role_policy    = jsonencode(
+        {
+            Statement = [
+                {
+                    Action    = "sts:AssumeRole"
+                    Effect    = "Allow"
+                    Principal = {
+                        Service = "ec2.amazonaws.com"
+                    }
+                },
+                {
+                    Action    = "sts:AssumeRole"
+                    Effect    = "Allow"
+                    Principal = {
+                        Service = "eks.amazonaws.com"
+                    }
+                },
+            ]
+            Version   = "2012-10-17"
+        }
+    )
+    create_date           = "2025-02-18T12:41:33Z"
+    force_detach_policies = false
+    id                    = "eks-public-us-east-2-marcel-01"
+    managed_policy_arns   = [
+        "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly",
+        "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+        "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy",
+    ]
+    max_session_duration  = 3600
+    name                  = "eks-public-us-east-2-marcel-01"
+    path                  = "/"
+    tags                  = {}
+    tags_all              = {}
+    unique_id             = "AROARLJUM4GFTI3TQF7ZY"
+}
+
+# aws_iam_role_policy_attachment.cni_policy:
+resource "aws_iam_role_policy_attachment" "cni_policy" {
+    id         = "eks-node-role-20250219082226076900000002"
+    policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+    role       = "eks-node-role"
+}
+
+# aws_iam_role_policy_attachment.ecr_read_only:
+resource "aws_iam_role_policy_attachment" "ecr_read_only" {
+    id         = "eks-node-role-20250219082225859800000001"
+    policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+    role       = "eks-node-role"
+}
+
+# aws_iam_role_policy_attachment.ecr_readonly_policy:
+resource "aws_iam_role_policy_attachment" "ecr_readonly_policy" {
+    id         = "eks-public-us-east-2-marcel-01-20250218135926319500000001"
+    policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+    role       = "eks-public-us-east-2-marcel-01"
+}
+
+# aws_iam_role_policy_attachment.eks_cni_policy:
+resource "aws_iam_role_policy_attachment" "eks_cni_policy" {
+    id         = "eks-public-us-east-2-marcel-01-20250218135926322100000002"
+    policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+    role       = "eks-public-us-east-2-marcel-01"
+}
+
+# aws_iam_role_policy_attachment.eks_worker_policy:
+resource "aws_iam_role_policy_attachment" "eks_worker_policy" {
+    id         = "eks-public-us-east-2-marcel-01-20250218135926359500000003"
+    policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+    role       = "eks-public-us-east-2-marcel-01"
+}
+
+# aws_iam_role_policy_attachment.worker_node_policy:
+resource "aws_iam_role_policy_attachment" "worker_node_policy" {
+    id         = "eks-node-role-20250219082226091900000003"
+    policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+    role       = "eks-node-role"
+}
+
+# aws_internet_gateway.igw:
+resource "aws_internet_gateway" "igw" {
+    arn      = "arn:aws:ec2:us-east-2:092988563851:internet-gateway/igw-01f47d1628954ee74"
+    id       = "igw-01f47d1628954ee74"
+    owner_id = "092988563851"
+    tags     = {
+        "Name" = "main-igw"
+    }
+    tags_all = {
+        "Name" = "main-igw"
+    }
+    vpc_id   = "vpc-0e4ebd0a46c84a45d"
+}
+
+# aws_lb.alb_eks_marcel:
+resource "aws_lb" "alb_eks_marcel" {
+    arn                                         = "arn:aws:elasticloadbalancing:us-east-2:092988563851:loadbalancer/app/alb-eks-marcel/f30eebf96a71b44b"
+    arn_suffix                                  = "app/alb-eks-marcel/f30eebf96a71b44b"
+    client_keep_alive                           = 3600
+    desync_mitigation_mode                      = "defensive"
+    dns_name                                    = "alb-eks-marcel-865331150.us-east-2.elb.amazonaws.com"
+    drop_invalid_header_fields                  = false
+    enable_cross_zone_load_balancing            = true
+    enable_deletion_protection                  = false
+    enable_http2                                = true
+    enable_tls_version_and_cipher_suite_headers = false
+    enable_waf_fail_open                        = false
+    enable_xff_client_port                      = false
+    enable_zonal_shift                          = false
+    id                                          = "arn:aws:elasticloadbalancing:us-east-2:092988563851:loadbalancer/app/alb-eks-marcel/f30eebf96a71b44b"
+    idle_timeout                                = 60
+    internal                                    = false
+    ip_address_type                             = "ipv4"
+    load_balancer_type                          = "application"
+    name                                        = "alb-eks-marcel"
+    preserve_host_header                        = false
+    security_groups                             = [
+        "sg-05fe93f0e4ca400d0",
+    ]
+    subnets                                     = [
+        "subnet-0b858301b1f33a0ed",
+        "subnet-0c25dc58c19ff194a",
+    ]
+    tags                                        = {}
+    tags_all                                    = {}
+    vpc_id                                      = "vpc-0e4ebd0a46c84a45d"
+    xff_header_processing_mode                  = "append"
+    zone_id                                     = "Z3AADJGX6KTTL2"
+
+    access_logs {
+        enabled = false
+    }
+
+    connection_logs {
+        enabled = false
+    }
+
+    subnet_mapping {
+        subnet_id = "subnet-0b858301b1f33a0ed"
+    }
+    subnet_mapping {
+        subnet_id = "subnet-0c25dc58c19ff194a"
+    }
+}
+
+# aws_lb_listener.http:
+resource "aws_lb_listener" "http" {
+    arn                                  = "arn:aws:elasticloadbalancing:us-east-2:092988563851:listener/app/alb-eks-marcel/f30eebf96a71b44b/f49c90e4b53700bd"
+    id                                   = "arn:aws:elasticloadbalancing:us-east-2:092988563851:listener/app/alb-eks-marcel/f30eebf96a71b44b/f49c90e4b53700bd"
+    load_balancer_arn                    = "arn:aws:elasticloadbalancing:us-east-2:092988563851:loadbalancer/app/alb-eks-marcel/f30eebf96a71b44b"
+    port                                 = 80
+    protocol                             = "HTTP"
+    routing_http_response_server_enabled = false
+    tags                                 = {}
+    tags_all                             = {}
+
+    default_action {
+        order = 1
+        type  = "fixed-response"
+
+        fixed_response {
+            content_type = "text/plain"
+            message_body = "OK"
+            status_code  = "200"
+        }
+    }
+}
+
+# aws_route_table.public_rt:
+resource "aws_route_table" "public_rt" {
+    arn              = "arn:aws:ec2:us-east-2:092988563851:route-table/rtb-01160b0565ba954f2"
+    id               = "rtb-01160b0565ba954f2"
+    owner_id         = "092988563851"
+    propagating_vgws = []
+    route            = [
+        {
+            carrier_gateway_id         = ""
+            cidr_block                 = "0.0.0.0/0"
+            core_network_arn           = ""
+            destination_prefix_list_id = ""
+            egress_only_gateway_id     = ""
+            gateway_id                 = "igw-01f47d1628954ee74"
+            ipv6_cidr_block            = ""
+            local_gateway_id           = ""
+            nat_gateway_id             = ""
+            network_interface_id       = ""
+            transit_gateway_id         = ""
+            vpc_endpoint_id            = ""
+            vpc_peering_connection_id  = ""
+        },
+    ]
+    tags             = {
+        "Name" = "public-route-table"
+    }
+    tags_all         = {
+        "Name" = "public-route-table"
+    }
+    vpc_id           = "vpc-0e4ebd0a46c84a45d"
+}
+
+# aws_route_table_association.public_subnet_association[0]:
+resource "aws_route_table_association" "public_subnet_association" {
+    id             = "rtbassoc-068c165e57ddddfb7"
+    route_table_id = "rtb-01160b0565ba954f2"
+    subnet_id      = "subnet-0c25dc58c19ff194a"
+}
+
+# aws_route_table_association.public_subnet_association[1]:
+resource "aws_route_table_association" "public_subnet_association" {
+    id             = "rtbassoc-08f6ad737eb3ae08e"
+    route_table_id = "rtb-01160b0565ba954f2"
+    subnet_id      = "subnet-0b858301b1f33a0ed"
+}
+
+# aws_security_group.rds_sg:
+resource "aws_security_group" "rds_sg" {
+    arn                    = "arn:aws:ec2:us-east-2:092988563851:security-group/sg-087e04db2fe83946b"
+    description            = "Allow PostgreSQL inbound traffic"
+    egress                 = [
+        {
+            cidr_blocks      = [
+                "0.0.0.0/0",
+            ]
+            description      = ""
+            from_port        = 0
+            ipv6_cidr_blocks = []
+            prefix_list_ids  = []
+            protocol         = "-1"
+            security_groups  = []
+            self             = false
+            to_port          = 0
+        },
+    ]
+    id                     = "sg-087e04db2fe83946b"
+    ingress                = [
+        {
+            cidr_blocks      = [
+                "0.0.0.0/0",
+            ]
+            description      = "PostgreSQL access"
+            from_port        = 5432
+            ipv6_cidr_blocks = []
+            prefix_list_ids  = []
+            protocol         = "tcp"
+            security_groups  = []
+            self             = false
+            to_port          = 5432
+        },
+    ]
+    name                   = "rds-postgres-sg"
+    owner_id               = "092988563851"
+    revoke_rules_on_delete = false
+    tags                   = {
+        "Name" = "rds-postgres-sg"
+    }
+    tags_all               = {
+        "Name" = "rds-postgres-sg"
+    }
+    vpc_id                 = "vpc-0e4ebd0a46c84a45d"
+}
+
+# aws_security_group.sg_for_alb_eks_marcel:
+resource "aws_security_group" "sg_for_alb_eks_marcel" {
+    arn                    = "arn:aws:ec2:us-east-2:092988563851:security-group/sg-05fe93f0e4ca400d0"
+    description            = "LoadBalancer Security Group"
+    egress                 = [
+        {
+            cidr_blocks      = [
+                "0.0.0.0/0",
+            ]
+            description      = "Allow all outbound traffic by default"
+            from_port        = 0
+            ipv6_cidr_blocks = []
+            prefix_list_ids  = []
+            protocol         = "-1"
+            security_groups  = []
+            self             = false
+            to_port          = 0
+        },
+    ]
+    id                     = "sg-05fe93f0e4ca400d0"
+    ingress                = [
+        {
+            cidr_blocks      = [
+                "0.0.0.0/0",
+            ]
+            description      = "Allow HTTP"
+            from_port        = 80
+            ipv6_cidr_blocks = []
+            prefix_list_ids  = []
+            protocol         = "tcp"
+            security_groups  = []
+            self             = false
+            to_port          = 80
+        },
+        {
+            cidr_blocks      = [
+                "0.0.0.0/0",
+            ]
+            description      = "Allow HTTPS"
+            from_port        = 443
+            ipv6_cidr_blocks = []
+            prefix_list_ids  = []
+            protocol         = "tcp"
+            security_groups  = []
+            self             = false
+            to_port          = 443
+        },
+    ]
+    name                   = "marcel-sg-for-alb-eks"
+    owner_id               = "092988563851"
+    revoke_rules_on_delete = false
+    tags                   = {}
+    tags_all               = {}
+    vpc_id                 = "vpc-0e4ebd0a46c84a45d"
+}
+
+# aws_subnet.subnet_private_us_east_2a_marcel_01:
+resource "aws_subnet" "subnet_private_us_east_2a_marcel_01" {
+    arn                                            = "arn:aws:ec2:us-east-2:092988563851:subnet/subnet-07accdc1ca23d4cb1"
+    assign_ipv6_address_on_creation                = false
+    availability_zone                              = "us-east-2a"
+    availability_zone_id                           = "use2-az1"
+    cidr_block                                     = "10.0.4.0/24"
+    enable_dns64                                   = false
+    enable_lni_at_device_index                     = 0
+    enable_resource_name_dns_a_record_on_launch    = false
+    enable_resource_name_dns_aaaa_record_on_launch = false
+    id                                             = "subnet-07accdc1ca23d4cb1"
+    ipv6_native                                    = false
+    map_customer_owned_ip_on_launch                = false
+    map_public_ip_on_launch                        = false
+    owner_id                                       = "092988563851"
+    private_dns_hostname_type_on_launch            = "ip-name"
+    tags                                           = {
+        "Name" = "subnet-private-us-east-2a-marcel-01"
+    }
+    tags_all                                       = {
+        "Name" = "subnet-private-us-east-2a-marcel-01"
+    }
+    vpc_id                                         = "vpc-0e4ebd0a46c84a45d"
+}
+
+# aws_subnet.subnet_private_us_east_2b_marcel_01:
+resource "aws_subnet" "subnet_private_us_east_2b_marcel_01" {
+    arn                                            = "arn:aws:ec2:us-east-2:092988563851:subnet/subnet-094d41661b0bb03fd"
+    assign_ipv6_address_on_creation                = false
+    availability_zone                              = "us-east-2b"
+    availability_zone_id                           = "use2-az2"
+    cidr_block                                     = "10.0.3.0/24"
+    enable_dns64                                   = false
+    enable_lni_at_device_index                     = 0
+    enable_resource_name_dns_a_record_on_launch    = false
+    enable_resource_name_dns_aaaa_record_on_launch = false
+    id                                             = "subnet-094d41661b0bb03fd"
+    ipv6_native                                    = false
+    map_customer_owned_ip_on_launch                = false
+    map_public_ip_on_launch                        = false
+    owner_id                                       = "092988563851"
+    private_dns_hostname_type_on_launch            = "ip-name"
+    tags                                           = {
+        "Name" = "subnet-private-us-east-2b-marcel-01"
+    }
+    tags_all                                       = {
+        "Name" = "subnet-private-us-east-2b-marcel-01"
+    }
+    vpc_id                                         = "vpc-0e4ebd0a46c84a45d"
+}
+
+# aws_subnet.subnet_public_us_east_2a_marcel_01:
+resource "aws_subnet" "subnet_public_us_east_2a_marcel_01" {
+    arn                                            = "arn:aws:ec2:us-east-2:092988563851:subnet/subnet-0c25dc58c19ff194a"
+    assign_ipv6_address_on_creation                = false
+    availability_zone                              = "us-east-2a"
+    availability_zone_id                           = "use2-az1"
+    cidr_block                                     = "10.0.1.0/24"
+    enable_dns64                                   = false
+    enable_lni_at_device_index                     = 0
+    enable_resource_name_dns_a_record_on_launch    = false
+    enable_resource_name_dns_aaaa_record_on_launch = false
+    id                                             = "subnet-0c25dc58c19ff194a"
+    ipv6_native                                    = false
+    map_customer_owned_ip_on_launch                = false
+    map_public_ip_on_launch                        = true
+    owner_id                                       = "092988563851"
+    private_dns_hostname_type_on_launch            = "ip-name"
+    tags                                           = {
+        "Name" = "subnet-public-us-east-2-marcel-01"
+    }
+    tags_all                                       = {
+        "Name" = "subnet-public-us-east-2-marcel-01"
+    }
+    vpc_id                                         = "vpc-0e4ebd0a46c84a45d"
+}
+
+# aws_subnet.subnet_public_us_east_2b_marcel_01:
+resource "aws_subnet" "subnet_public_us_east_2b_marcel_01" {
+    arn                                            = "arn:aws:ec2:us-east-2:092988563851:subnet/subnet-0b858301b1f33a0ed"
+    assign_ipv6_address_on_creation                = false
+    availability_zone                              = "us-east-2b"
+    availability_zone_id                           = "use2-az2"
+    cidr_block                                     = "10.0.2.0/24"
+    enable_dns64                                   = false
+    enable_lni_at_device_index                     = 0
+    enable_resource_name_dns_a_record_on_launch    = false
+    enable_resource_name_dns_aaaa_record_on_launch = false
+    id                                             = "subnet-0b858301b1f33a0ed"
+    ipv6_native                                    = false
+    map_customer_owned_ip_on_launch                = false
+    map_public_ip_on_launch                        = true
+    owner_id                                       = "092988563851"
+    private_dns_hostname_type_on_launch            = "ip-name"
+    tags                                           = {
+        "Name" = "subnet-public-us-east-2b-marcel-01"
+    }
+    tags_all                                       = {
+        "Name" = "subnet-public-us-east-2b-marcel-01"
+    }
+    vpc_id                                         = "vpc-0e4ebd0a46c84a45d"
+}
+
+# aws_vpc.vpc_us_east_2_marcel_01:
+resource "aws_vpc" "vpc_us_east_2_marcel_01" {
+    arn                                  = "arn:aws:ec2:us-east-2:092988563851:vpc/vpc-0e4ebd0a46c84a45d"
+    assign_generated_ipv6_cidr_block     = false
+    cidr_block                           = "10.0.0.0/16"
+    default_network_acl_id               = "acl-04657ff7ac856ecbe"
+    default_route_table_id               = "rtb-057db752d9147327f"
+    default_security_group_id            = "sg-0ec7b2b3226ee714d"
+    dhcp_options_id                      = "dopt-04cdb896a30355b14"
+    enable_dns_hostnames                 = true
+    enable_dns_support                   = true
+    enable_network_address_usage_metrics = false
+    id                                   = "vpc-0e4ebd0a46c84a45d"
+    instance_tenancy                     = "default"
+    ipv6_netmask_length                  = 0
+    main_route_table_id                  = "rtb-057db752d9147327f"
+    owner_id                             = "092988563851"
+    tags                                 = {
+        "Name" = "vpc-us-east-2-marcel-01"
+    }
+    tags_all                             = {
+        "Name" = "vpc-us-east-2-marcel-01"
+    }
+}
+
+
+Outputs:
+
+node_group_arn = "arn:aws:eks:us-east-2:092988563851:nodegroup/eks-cluster-us-east-2-marcel-01/ng-eks-cluster-us-east-2-marcel-01/5eca8ea9-e529-c77e-2917-630fcfaac9e3"
+node_role_arn = "arn:aws:iam::092988563851:role/eks-node-role"
+rds_endpoint = "postgresql-instance.cjhcxu64g69o.us-east-2.rds.amazonaws.com:5432"
