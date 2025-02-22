@@ -63,3 +63,12 @@ Events:
   {node.cloudprovider.kubernetes.io/uninitialized: true}. 
   preemption: 0/2 nodes are available: 2 Preemption is not helpful for scheduling.
 
+
+
+
+
+  #test create eks cluster using eksctl 
+eksctl create cluster --name marcel2  --nodes=1 --node-type=t2.small --profile wiliot --region us-east-2
+
+
+
