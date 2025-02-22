@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
       - name: flask-app
-        image:  123456789012.dkr.ecr.us-east-2.amazonaws.com/ecr-repository-us-east-2-marcel-01/flask-app@sha256:ccf8b3cd3e12dbb2f482ae23eeb28eeefad8ef16cadc1ccf4a2a5f9c7d7e935e
+        image: 092988563851.dkr.ecr.us-east-2.amazonaws.com/ecr-repository-us-east-2-marcel-01:flask-app
+        imagePullPolicy: Always
         ports:
         - containerPort: 5000
         envFrom:
